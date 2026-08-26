@@ -1,0 +1,15 @@
+RICHLESSON WIKI SETUP
+=====================
+
+1. Open:
+   https://github.com/iamrichmack111/richlesson-remotion-v3/wiki
+
+2. Initialize the Wiki once by creating the first Home page.
+
+3. From the repo run:
+   ./scripts/sync-wiki.sh
+
+The wiki Git remote is SSH only:
+   git@github.com:iamrichmack111/richlesson-remotion-v3.wiki.git
+
+Canonical pages remain in docs/wiki/ so documentation is source-controlled even if the Wiki UI changes.
