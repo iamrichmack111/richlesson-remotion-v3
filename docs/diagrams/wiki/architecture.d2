@@ -1,0 +1,55 @@
+direction: down
+
+source: {
+  label: "SOURCE LAYER"
+  txt: ".txt"
+  md: ".md"
+  json: ".json"
+}
+
+intelligence: {
+  label: "INTELLIGENCE LAYER"
+  deterministic: "Deterministic Parser"
+  ollama: "Optional Ollama"
+  normalization: "Normalization"
+  verification: "Verification"
+
+  deterministic -> normalization
+  ollama -> normalization
+  normalization -> verification
+}
+
+presentation: {
+  label: "PRESENTATION LAYER"
+  scenes: "Scene Model"
+  themes: "Theme Engine"
+  layouts: "Layout Engine"
+  react: "React / Remotion"
+
+  scenes -> react
+  themes -> react
+  layouts -> react
+}
+
+media: {
+  label: "MEDIA LAYER"
+  narration: "Neural Narration"
+  audio: "Audio Assets"
+  render: "Video Renderer"
+
+  narration -> audio
+  audio -> render
+}
+
+delivery: {
+  label: "DELIVERY LAYER"
+  video: "MP4"
+  youtube: "YouTube"
+  container: "Docker / GHCR"
+  release: "GitHub Release"
+}
+
+source -> intelligence
+intelligence -> presentation
+presentation -> media
+media -> delivery

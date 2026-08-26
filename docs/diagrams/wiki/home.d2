@@ -1,0 +1,143 @@
+direction: right
+
+title: {
+  label: "RICHLesson Platform Architecture"
+  shape: text
+  style.font-size: 34
+}
+
+input: {
+  label: "CONTENT INPUT"
+  shape: package
+
+  txt: {
+    label: ".txt"
+    shape: document
+  }
+
+  md: {
+    label: ".md"
+    shape: document
+  }
+
+  json: {
+    label: "Lesson JSON"
+    shape: document
+  }
+}
+
+compiler: {
+  label: "LESSON COMPILER"
+  shape: hexagon
+
+  parser: "Content Parser"
+  normalizer: "Scene Normalizer"
+  verifier: "Lesson Verifier"
+
+  parser -> normalizer
+  normalizer -> verifier
+}
+
+ai: {
+  label: "OPTIONAL LOCAL AI"
+  shape: cloud
+
+  ollama: "Ollama"
+  model: "Small Local Model"
+
+  ollama -> model
+}
+
+lesson: {
+  label: "STRUCTURED LESSON"
+  shape: package
+
+  title: "Title"
+  definition: "Definition"
+  formula: "Formula"
+  example: "Example"
+  diagram: "Diagram"
+  quiz: "Quiz"
+  answer: "Answer"
+  summary: "Summary"
+}
+
+voice: {
+  label: "NARRATION PIPELINE"
+  shape: package
+
+  tts: "Premium Neural TTS"
+  audio: "Scene Audio"
+  timing: "Duration Analysis"
+
+  tts -> audio
+  audio -> timing
+}
+
+render: {
+  label: "REMOTION ENGINE"
+  shape: package
+
+  react: "React Components"
+  themes: "Themes"
+  layouts: "Layouts"
+  animation: "Animation"
+  composition: "Composition"
+
+  react -> composition
+  themes -> composition
+  layouts -> composition
+  animation -> composition
+}
+
+output: {
+  label: "DELIVERY"
+  shape: package
+
+  mp4: {
+    label: "MP4"
+    shape: document
+  }
+
+  hd: "720p / 1080p / Higher"
+  youtube: {
+    label: "YouTube"
+    shape: cloud
+  }
+
+  docker: {
+    label: "Docker / GHCR"
+    shape: cylinder
+  }
+}
+
+input -> compiler
+input -> ai
+ai -> compiler
+
+compiler -> lesson
+lesson -> voice
+lesson -> render
+
+voice -> render
+render -> output
+
+output.mp4 -> output.youtube
+
+ci: {
+  label: "ENGINEERING PIPELINE"
+  shape: package
+
+  github: "GitHub"
+  actions: "GitHub Actions"
+  security: "Security"
+  dependabot: "Dependabot"
+  release: "Release"
+
+  github -> actions
+  actions -> security
+  actions -> release
+  dependabot -> github
+}
+
+ci.release -> output.docker

@@ -1,0 +1,34 @@
+direction: right
+
+scene: {
+  label: "Scene Narration"
+  shape: document
+}
+
+voice: {
+  label: "Premium Neural Voice"
+  shape: cloud
+}
+
+mp3: {
+  label: "Scene MP3"
+  shape: document
+}
+
+probe: {
+  label: "FFprobe"
+  shape: hexagon
+}
+
+duration: "Audio Duration"
+
+timeline: {
+  label: "Remotion Timeline"
+  shape: package
+}
+
+scene -> voice
+voice -> mp3
+mp3 -> probe
+probe -> duration
+duration -> timeline

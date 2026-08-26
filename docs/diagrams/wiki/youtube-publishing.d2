@@ -1,0 +1,47 @@
+direction: right
+
+lesson: "Lesson"
+render: "Remotion Render"
+
+resolution: {
+  label: "Resolution"
+  p720: "720p"
+  p1080: "1080p"
+  higher: "Higher"
+}
+
+mp4: {
+  label: "Final MP4"
+  shape: document
+}
+
+metadata: {
+  label: "Metadata"
+  title: "Title"
+  description: "Description.md"
+  privacy: "Privacy"
+}
+
+oauth: {
+  label: "Google OAuth"
+  shape: cloud
+}
+
+youtube: {
+  label: "YouTube API"
+  shape: cloud
+}
+
+channel: {
+  label: "YouTube Channel"
+  shape: cloud
+}
+
+lesson -> render
+render -> resolution
+resolution -> mp4
+
+mp4 -> youtube
+metadata -> youtube
+oauth -> youtube
+youtube -> channel

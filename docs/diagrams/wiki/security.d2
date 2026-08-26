@@ -1,0 +1,34 @@
+direction: down
+
+repository: {
+  label: "RICHLesson Repository"
+  shape: cylinder
+}
+
+static: {
+  label: "STATIC ANALYSIS"
+  ruff: "Ruff"
+  bandit: "Bandit"
+  tsc: "TypeScript"
+  shellcheck: "ShellCheck"
+}
+
+dependencies: {
+  label: "SUPPLY CHAIN"
+  npm: "npm"
+  pip: "pip"
+  dependabot: "Dependabot"
+}
+
+automation: {
+  label: "GITHUB ACTIONS"
+  ci: "CI"
+  security: "Security"
+  docker: "Docker"
+}
+
+repository -> static
+repository -> dependencies
+
+static -> automation
+dependencies -> automation

@@ -1,0 +1,49 @@
+direction: right
+
+page: {
+  label: "Troubleshooting"
+  shape: package
+}
+
+section1: {
+  label: "No scenes"
+  shape: document
+}
+
+page -> section1
+
+section2: {
+  label: "Invalid AI JSON"
+  shape: document
+}
+
+section1 -> section2
+
+section3: {
+  label: "ANSI terminal garbage"
+  shape: document
+}
+
+section2 -> section3
+
+section4: {
+  label: "durationInFrames = 0"
+  shape: document
+}
+
+section3 -> section4
+
+section5: {
+  label: "Docker cannot reach Ollama"
+  shape: document
+}
+
+section4 -> section5
+
+section6: {
+  label: "YouTube OAuth"
+  shape: document
+}
+
+section5 -> section6
+

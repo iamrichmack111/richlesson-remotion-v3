@@ -1,0 +1,44 @@
+direction: right
+
+developer: "Developer"
+
+git: {
+  label: "Git"
+  shape: cylinder
+}
+
+github: {
+  label: "GitHub"
+  shape: cloud
+}
+
+ci: {
+  label: "CI"
+  typescript: "TypeScript"
+  python: "Python"
+  ruff: "Ruff"
+  shellcheck: "ShellCheck"
+}
+
+security: {
+  label: "SECURITY"
+  bandit: "Bandit"
+  audit: "Dependency Audit"
+  dependabot: "Dependabot"
+}
+
+delivery: {
+  label: "DELIVERY"
+  docker: "Docker"
+  ghcr: "GHCR"
+  release: "GitHub Release"
+}
+
+developer -> git
+git -> github
+
+github -> ci
+github -> security
+
+ci -> delivery
+security -> delivery

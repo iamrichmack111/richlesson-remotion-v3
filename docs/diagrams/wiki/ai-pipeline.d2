@@ -1,0 +1,51 @@
+direction: right
+
+source: {
+  label: "SOURCE"
+  shape: document
+}
+
+prompt: {
+  label: "Controlled Prompt"
+  shape: document
+}
+
+ollama: {
+  label: "Ollama API"
+  shape: cloud
+}
+
+json: {
+  label: "Raw JSON"
+  shape: document
+}
+
+normalize: {
+  label: "Normalize"
+  shape: hexagon
+}
+
+verify: {
+  label: "Verify"
+  shape: hexagon
+}
+
+approved: {
+  label: "Approved Lesson"
+  shape: document
+}
+
+reject: {
+  label: "Reject / Repair"
+  shape: package
+}
+
+source -> prompt
+prompt -> ollama
+ollama -> json
+json -> normalize
+normalize -> verify
+
+verify -> approved: VALID
+verify -> reject: INVALID
+reject -> prompt: RETRY

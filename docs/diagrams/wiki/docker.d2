@@ -1,0 +1,35 @@
+direction: right
+
+source: {
+  label: "Git Repository"
+  shape: cylinder
+}
+
+dockerfile: {
+  label: "Dockerfile"
+  shape: document
+}
+
+build: "Docker Build"
+
+image: {
+  label: "Richlesson Image"
+  shape: cylinder
+}
+
+local: {
+  label: "Local Container"
+  shape: package
+}
+
+ghcr: {
+  label: "GHCR"
+  shape: cloud
+}
+
+source -> dockerfile
+dockerfile -> build
+build -> image
+
+image -> local
+image -> ghcr
