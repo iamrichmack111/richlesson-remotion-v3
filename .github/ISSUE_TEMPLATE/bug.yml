@@ -1,0 +1,16 @@
+name: Bug
+description: Report a reproducible Richlesson defect
+title: '[bug] '
+labels: [bug]
+body:
+  - type: textarea
+    id: summary
+    attributes: {label: Summary}
+    validations: {required: true}
+  - type: textarea
+    id: reproduce
+    attributes: {label: Reproduction, description: 'Include command and sanitized output.'}
+    validations: {required: true}
+  - type: textarea
+    id: environment
+    attributes: {label: Environment, description: 'OS, Node, Python, FFmpeg, Ollama model if relevant.'}
