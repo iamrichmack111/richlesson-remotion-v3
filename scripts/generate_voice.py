@@ -29,13 +29,23 @@ def audio_duration(path):
     if not shutil.which("ffprobe"):
         return None
     p = subprocess.run(
-        ["ffprobe","-v","error","-show_entries","format=duration",
-         "-of","default=noprint_wrappers=1:nokey=1",str(path)],
-        capture_output=True,text=True
+        [
+            "ffprobe",
+            "-v",
+            "error",
+            "-show_entries",
+            "format=duration",
+            "-of",
+            "default=noprint_wrappers=1:nokey=1",
+            str(path),
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
     )
     try:
         return float(p.stdout.strip())
-    except Exception:
+    except ValueError:
         return None
 
 async def synth(text, voice, output, rate):

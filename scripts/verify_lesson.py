@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-import ast, json, re, sys
+import ast
+import json
+import re
+import sys
 from fractions import Fraction
 from pathlib import Path
 
@@ -16,7 +19,7 @@ def clean_text(v):
     v = "".join(ch for ch in v if ch in "\n\r\t" or ord(ch)>=32)
     v = re.sub(r"[ \t]*\n[ \t]*"," ",v)
     v = re.sub(r" {2,}"," ",v)
-    v = re.sub(r"\b(\w+)\s+\1\b",r"\1",v,flags=re.I)
+    v = re.sub(r"\b(\w+)\s+\1\b",r"\1",v,flags=re.IGNORECASE)
     return v.strip()
 def dedupe(items):
     out=[]; seen=set()
@@ -86,8 +89,10 @@ for i,scene in enumerate(scenes,1):
             v=eval_fraction(calc)
             scene["answer"]=exact(v); scene["decimal_answer"]=decimal(v)
             scene["verified"]=True; scene["verification_method"]="deterministic_fraction"
-        except Exception as e:
-            scene["verified"]=False; scene["verification_error"]=str(e); unverified+=1
+        except (ValueError, SyntaxError, ZeroDivisionError) as e:
+            scene["verified"] = False
+            scene["verification_error"] = str(e)
+            unverified += 1
     elif scene.get("type") in {"quiz","answer","example"} and scene.get("answer") is not None:
         scene["verified"]=False; scene["verification_method"]="source_or_model_only"; unverified+=1
 

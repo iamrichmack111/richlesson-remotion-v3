@@ -167,7 +167,7 @@ def parse_structured_txt(text):
         if not line:
             continue
 
-        mscene = re.match(r"^\[SCENE\s+([A-Za-z_-]+)\]$", line, re.I)
+        mscene = re.match(r"^\[SCENE\s+([A-Za-z_-]+)\]$", line, re.IGNORECASE)
         if mscene:
             if current:
                 scenes.append(current)
@@ -287,7 +287,8 @@ def ollama_generate(text, filename, model):
         ["ollama", "run", model],
         input=prompt,
         text=True,
-        capture_output=True
+        capture_output=True,
+        check=False,
     )
     if proc.returncode != 0:
         raise SystemExit("Ollama failed:\n" + proc.stderr)
@@ -334,7 +335,7 @@ def validate(data):
         scene.setdefault("duration", 5)
         try:
             scene["duration"] = max(2, float(scene["duration"]))
-        except Exception:
+        except (TypeError, ValueError):
             scene["duration"] = 5
         scene.setdefault("heading", f"Scene {i+1}")
         scene.setdefault("narration", scene.get("subheading", scene["heading"]))
