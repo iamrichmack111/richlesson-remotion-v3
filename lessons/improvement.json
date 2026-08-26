@@ -1,0 +1,64 @@
+{
+  "id": "richmack-improvement-001",
+  "title": "The Richmack Improvement Formula",
+  "subtitle": "Why Seven Stable Reps Matter",
+  "fps": 30,
+  "formula": {
+    "display": "G = 2^(N/7)",
+    "growthMultiple": 4,
+    "stableReps": 14
+  },
+  "scenes": [
+    {
+      "duration": 5,
+      "type": "title",
+      "heading": "The Richmack Improvement Formula",
+      "subheading": "Why seven stable repetitions matter.",
+      "narration": "The Richmack Improvement Formula models capability as compound growth created by meaningful, stable repetitions."
+    },
+    {
+      "duration": 7,
+      "type": "formula",
+      "heading": "The Seven-Rep Rule",
+      "formula": "G = 2^(N/7)",
+      "subheading": "Seven stable reps model one doubling.",
+      "narration": "The core model says that capability doubles after every seven stable repetitions."
+    },
+    {
+      "duration": 7,
+      "type": "counter",
+      "heading": "7 Stable Reps",
+      "from": 1,
+      "to": 2,
+      "suffix": "\u00d7",
+      "subheading": "One modeled doubling",
+      "narration": "At seven meaningful stable repetitions, the model represents one doubling, or two times the starting capability."
+    },
+    {
+      "duration": 7,
+      "type": "counter",
+      "heading": "14 Stable Reps",
+      "from": 2,
+      "to": 4,
+      "suffix": "\u00d7",
+      "subheading": "Two modeled doublings",
+      "narration": "Fourteen stable repetitions represent two doublings. Two times two gives a modeled four times improvement."
+    },
+    {
+      "duration": 9,
+      "type": "comparison",
+      "heading": "Raw Reps \u2260 Stable Reps",
+      "left": "100 Raw Attempts",
+      "right": "14 Stable Reps",
+      "footer": "Connected \u2022 Retained \u2022 Reusable",
+      "narration": "But raw volume is not the goal. A repetition matters when the lesson stabilizes, connects to previous knowledge, and becomes reusable."
+    },
+    {
+      "duration": 7,
+      "type": "summary",
+      "heading": "Do \u2192 Write \u2192 Refresh",
+      "subheading": "Turn experience into stored capability.",
+      "narration": "The practical loop is simple. Do the work, write the lesson, refresh what you already learned, and repeat."
+    }
+  ]
+}

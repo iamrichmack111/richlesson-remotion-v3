@@ -1,0 +1,17 @@
+TITLE: The Richmack Improvement Formula
+SUBTITLE: Seven-Rep Doubling
+VOICE: andrew
+THEME: blueprint
+
+[SCENE formula]
+HEADING: The Seven-Rep Rule
+FORMULA: G = 2^(N/7)
+SUBHEADING: Seven stable repetitions model one doubling.
+NARRATION: The model represents seven stable repetitions as one doubling of capability.
+
+[SCENE counter]
+HEADING: Fourteen Stable Reps
+FROM: 2
+TO: 4
+SUFFIX: ×
+NARRATION: Fourteen stable repetitions represent two modeled doublings, or four times the starting capability.
