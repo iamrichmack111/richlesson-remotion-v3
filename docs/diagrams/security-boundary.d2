@@ -1,0 +1,12 @@
+direction: right
+repo: "Git repo"
+ollama: "Local Ollama"
+container: "Richlesson runtime"
+oauth: "OAuth client"
+token: "YouTube token"
+youtube: "YouTube API"
+repo -> container
+ollama -> container: "local API"
+oauth -> container: "runtime only"
+token -> container: "runtime only"
+container -> youtube

@@ -1,0 +1,17 @@
+direction: right
+source: "Markdown / TXT"
+parser: "Deterministic Parser"
+planner: "Ollama Planner"
+compiler: "Scene Compiler"
+validator: "Grounding + QA"
+tts: "Neural TTS"
+remotion: "Remotion"
+video: "MP4"
+youtube: "YouTube"
+source -> parser: "structured"
+source -> planner: "--ai"
+planner -> compiler -> validator
+parser -> validator
+validator -> tts -> remotion
+validator -> remotion
+remotion -> video -> youtube: "optional"

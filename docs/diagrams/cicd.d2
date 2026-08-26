@@ -1,0 +1,16 @@
+direction: right
+dev: "Developer"
+ssh: "SSH push"
+github: "GitHub"
+ci: "CI\nTS + Python + Shell"
+security: "Security\nBandit + audits"
+tag: "v* tag"
+buildx: "Docker Buildx"
+ghcr: "GHCR"
+release: "GitHub Release"
+dev -> ssh -> github
+github -> ci
+github -> security
+github -> tag
+tag -> buildx -> ghcr
+tag -> release
