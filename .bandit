@@ -1,0 +1,3 @@
+[bandit]
+exclude = ./.venv,./venv,./node_modules,./build
+skips = B101

@@ -1,0 +1,50 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: |
+            requirements-runtime.txt
+            requirements-dev.txt
+      - name: System dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ffmpeg jq shellcheck
+      - run: npm ci
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -r requirements-runtime.txt -r requirements-dev.txt
+      - name: TypeScript
+        run: npx tsc --noEmit
+      - name: Python syntax
+        run: python -m compileall -q scripts
+      - name: Ruff
+        run: ruff check scripts
+      - name: ShellCheck
+        run: |
+          shellcheck richlesson.sh
+          find scripts -maxdepth 1 -name '*.sh' -print0 | xargs -0 -r shellcheck
+      - name: JSON examples
+        run: find lessons -type f -name '*.json' -print0 | xargs -0 -r -n1 jq empty
+      - name: Docker build smoke test
+        run: docker build --pull -t richlesson-ci:${{ github.sha }} .
