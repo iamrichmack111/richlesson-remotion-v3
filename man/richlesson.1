@@ -1,0 +1,56 @@
+.TH RICHLESSON 1 "August 2026" "Richlesson" "User Commands"
+.SH NAME
+richlesson \- generate narrated lesson videos from Markdown or text
+.SH SYNOPSIS
+.B ./richlesson.sh
+.I INPUT
+.RI [ OPTIONS ]
+.SH DESCRIPTION
+Richlesson is a terminal-first lesson-to-video pipeline. Structured Markdown or text can be compiled deterministically; ordinary prose can be planned by a local Ollama model. Richlesson generates neural narration, validates lesson data, renders with Remotion, and can optionally upload the resulting MP4 to YouTube.
+.SH OPTIONS
+.TP
+.B --ai
+Use local Ollama-assisted planning.
+.TP
+.BI --model " MODEL"
+Select the Ollama model.
+.TP
+.BI --theme " THEME"
+Choose the Remotion visual theme.
+.TP
+.BI --voice " VOICE"
+Choose the configured neural voice.
+.TP
+.BI --resolution " PRESET"
+Choose 720p, 1080p, 1440p, 4k, shorts, or square.
+.TP
+.B --youtube
+Upload after a successful render.
+.TP
+.BI --privacy " STATUS"
+Choose private, unlisted, or public.
+.TP
+.BI --description " FILE"
+Use a Markdown/text file as YouTube description source.
+.SH EXAMPLES
+.nf
+./richlesson.sh lesson.md --resolution 1080p
+./richlesson.sh article.txt --ai --model gemma3:4b
+./richlesson.sh article.md --youtube --privacy private --description description.md
+.fi
+.SH SECURITY
+Never commit OAuth clients, refresh tokens, private keys, `.env` secrets, or private source materials.
+.SH FILES
+.I build/lesson.json
+Normalized scene contract.
+.br
+.I build/lesson.mp4
+Default rendered video.
+.br
+.I docs/wiki/
+Canonical wiki source.
+.SH SEE ALSO
+.BR ffmpeg (1),
+.BR docker (1),
+.BR git (1),
+.BR jq (1)
