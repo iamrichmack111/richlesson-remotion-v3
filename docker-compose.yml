@@ -1,0 +1,16 @@
+services:
+  richlesson:
+    build: .
+    image: richlesson:local
+    volumes:
+      - ./build:/app/build
+      - ./public/audio:/app/public/audio
+      - ./lessons:/work/lessons:ro
+    environment:
+      OLLAMA_URL: ${OLLAMA_URL:-http://host.docker.internal:11434}
+      MODEL: ${MODEL:-gemma3:4b}
+      VOICE: ${VOICE:-andrew}
+      THEME: ${THEME:-cinematic-glass}
+      RESOLUTION: ${RESOLUTION:-1080p}
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
