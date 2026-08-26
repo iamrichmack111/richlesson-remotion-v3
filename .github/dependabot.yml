@@ -2,9 +2,25 @@ version: 2
 updates:
   - package-ecosystem: npm
     directory: /
-    schedule: {interval: weekly, day: monday, time: '07:00'}
-    labels: [dependencies, javascript]
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
     open-pull-requests-limit: 5
+    ignore:
+      - dependency-name: "react"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "react-dom"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "@types/react"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "@types/react-dom"
+        update-types:
+          - "version-update:semver-major"
+
   - package-ecosystem: pip
     directory: /
     schedule: {interval: weekly, day: monday, time: '07:10'}
