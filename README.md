@@ -1,318 +1,157 @@
-# Richlesson V2
+<p align="center"><img src="docs/assets/richlesson-icon.svg" width="150" alt="Richlesson icon"></p>
 
-Terminal-first lesson video generator:
+# Richlesson
+
+[![CI](https://github.com/iamrichmack111/richlesson-remotion-v3/actions/workflows/ci.yml/badge.svg)](https://github.com/iamrichmack111/richlesson-remotion-v3/actions/workflows/ci.yml)
+[![Security](https://github.com/iamrichmack111/richlesson-remotion-v3/actions/workflows/security.yml/badge.svg)](https://github.com/iamrichmack111/richlesson-remotion-v3/actions/workflows/security.yml)
+[![Docker](https://github.com/iamrichmack111/richlesson-remotion-v3/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/iamrichmack111/richlesson-remotion-v3/actions/workflows/docker-publish.yml)
+[![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
+![Node](https://img.shields.io/badge/Node-22+-informational)
+![Python](https://img.shields.io/badge/Python-3.13+-informational)
+![Remotion](https://img.shields.io/badge/video-Remotion-informational)
+![Ollama](https://img.shields.io/badge/local_AI-Ollama-informational)
+
+**Terminal-first AI-assisted lesson-to-video generation from Markdown or plain text.**
+
+Richlesson separates content interpretation from deterministic video rendering. Structured lessons work without AI. Ordinary prose can be reorganized with a local Ollama model, normalized into a lesson JSON contract, narrated with neural TTS, rendered with Remotion, and optionally published to YouTube.
+
+## Architecture
 
 ```text
-.md / .txt
-   ↓
-deterministic parser OR local Ollama AI
-   ↓
-validated lesson.json
-   ↓
-premium neural TTS
-   ↓
-Remotion
-   ↓
-MP4
+Markdown / TXT
+      |
+      +---- structured ----> deterministic parser
+      |
+      +---- --ai ----------> local Ollama
+                               |
+                               v
+                         lesson planning
+                               |
+                               v
+                         scene compiler
+                               |
+                               v
+                        source grounding
+                               |
+                               v
+                          quality gate
+                               |
+                    +----------+----------+
+                    |                     |
+                    v                     v
+              neural narration       Remotion scenes
+                    |                     |
+                    +----------+----------+
+                               |
+                               v
+                              MP4
+                               |
+                               v
+                     optional YouTube upload
 ```
 
-## Install
+## Features
+- Markdown and TXT inputs.
+- Deterministic non-AI mode.
+- Local Ollama-assisted lesson planning.
+- JSON rendering contract.
+- Many semantic scene types, layouts, and themes.
+- Neural narration and captions.
+- 720p, 1080p, 1440p, 4K, Shorts, square presets.
+- Optional private/unlisted/public YouTube delivery.
+- Markdown/text description files.
+- Source-grounding/quality architecture.
+- Docker + Compose.
+- CI, Bandit, audits, Dependabot.
+- Multi-arch GHCR CD on tags.
+- D2 diagrams, SVG icon, man page, detailed wiki source.
 
+## Setup
 ```bash
-brew install ffmpeg
-python -m pip install edge-tts
-npm install
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements-runtime.txt
+npm ci
 ```
 
-For AI formatting, install Ollama separately and have a model available, for example:
-
+macOS:
 ```bash
-ollama pull gemma3:4b
+brew install ffmpeg jq
 ```
 
-## Structured Markdown — no AI
-
+## Usage
+Structured:
 ```bash
 ./richlesson.sh lessons/improvement.md
 ```
-
-## Structured TXT — no AI
-
+AI:
 ```bash
-./richlesson.sh lessons/example.txt
+./richlesson.sh article.txt --ai --model gemma3:4b
 ```
-
-## Messy Markdown or text — local AI
-
+1080p:
 ```bash
-./richlesson.sh my-notes.md --ai
-./richlesson.sh my-notes.txt --ai
+./richlesson.sh article.md --ai --resolution 1080p
 ```
-
-Default model:
-
-```text
-gemma3:4b
-```
-
-Override it:
-
+Shorts:
 ```bash
-./richlesson.sh notes.md --ai --model gemma3:1b
+./richlesson.sh article.md --ai --resolution shorts
+```
+Private YouTube:
+```bash
+./richlesson.sh article.md --ai --youtube --privacy private --description description.md
 ```
 
 ## Themes
+Examples: cinematic-glass, blueprint, terminal-noir, neon-grid, editorial, paper-ink, retro-future, classroom, data-lab, minimal-luxury, space-console, industrial, midnight-academy, signal, monochrome.
 
-Use:
+## Security
+Do not commit OAuth clients, YouTube refresh tokens, private source books, environment secrets, private keys, or generated credentials. AI-generated factual content must be reviewed before public release.
 
+## Docker
 ```bash
-./richlesson.sh lesson.md --theme blueprint
+docker build -t richlesson:local .
+docker compose build
 ```
 
-Available themes:
+## CI/CD
+CI checks TypeScript, Python, Ruff, ShellCheck, JSON, and Docker. Security checks Bandit plus Python/npm dependency audits. Full video rendering is intentionally excluded from routine CI.
 
-- `cinematic-glass`
-- `blueprint`
-- `terminal-noir`
-- `neon-grid`
-- `editorial`
-- `paper-ink`
-- `retro-future`
-- `classroom`
-- `data-lab`
-- `minimal-luxury`
-- `space-console`
-- `industrial`
-- `midnight-academy`
-- `signal`
-- `monochrome`
-
-These change more than colors: font family, corner geometry, grid behavior, glow behavior,
-panel treatment, contrast, and overall presentation language.
-
-## Voices
-
+Release:
 ```bash
-./richlesson.sh lesson.md --voice andrew
-./richlesson.sh lesson.md --voice brian
-./richlesson.sh lesson.md --voice ava
-./richlesson.sh lesson.md --voice emma
-./richlesson.sh lesson.md --voice guy
-./richlesson.sh lesson.md --voice jenny
+git tag v0.3.0
+git push origin v0.3.0
 ```
+This publishes a multi-architecture GHCR image and creates a GitHub Release.
 
-## Scene types
+## Documentation
+- [Docker](docs/DOCKER.md)
+- [D2 diagrams](docs/DIAGRAMS.md)
+- [Man page](docs/MANPAGE.md)
+- [Wiki source](docs/wiki/Home.md)
 
-Supported:
-
-```text
-title
-text
-formula
-counter
-comparison
-steps
-timeline
-quote
-terminal
-code
-diagram
-chart
-stat
-definition
-example
-quiz
-answer
-warning
-tip
-summary
-cta
-```
-
-The current renderer has dedicated visual treatments for title, formula, counter,
-comparison, steps/items, terminal/code, quiz choices, stat, and general text-based scenes.
-The remaining scene names are already accepted by the compiler and fall back gracefully
-to the general scene treatment until more specialized renderers are added.
-
-## Markdown format
-
-```md
-# Lesson Title
-subtitle: Optional subtitle
-voice: andrew
-theme: cinematic-glass
-
-## Formula
-heading: Seven-Rep Rule
-formula: G = 2^(N/7)
-subheading: Seven stable reps model one doubling.
-> Narration goes in a blockquote.
-
-## Steps
-heading: Process
-- First
-- Second
-- Third
-> Narration for this scene.
-
-## Terminal
-heading: Start the stack
-command: docker compose up -d
-> This command starts the application stack.
-
-## Code
-heading: Flask route
-
-```python
-@app.get("/health")
-def health():
-    return {"ok": True}
-```
-
-> This defines a simple health endpoint.
-
-## Quiz
-heading: Quick Check
-question: How many stable reps model one doubling?
-- 5
-- 7
-- 10
-- 14
-answer: 7
-> The answer is seven.
-```
-
-## AI behavior
-
-AI is optional. The AI path asks the local model to:
-
-- preserve the source meaning
-- preserve formulas, commands, terminology, and numbers
-- choose only from allowed scene types
-- generate concise narration
-- return JSON only
-
-The JSON is validated before Remotion sees it. Unknown scene types are converted to `text`.
-
-If the model emits invalid JSON, the raw response is saved to:
-
-```text
-build/ollama-raw.txt
-```
-
-## Output
-
-```text
-build/lesson.json
-build/lesson.mp4
-public/audio/scene-01.mp3
-public/audio/scene-02.mp3
-...
-```
-
-# V3 quality upgrades
-
-V3 adds a two-pass local AI planner, exact source grounding, automatic phrase captions,
-layout variation, and a preflight quality gate.
-
-## New AI pipeline
-
-```text
-source.md / source.txt
-  -> Pass 1: outline.json
-  -> Pass 2: lesson-ai.json
-  -> grounding + verification
-  -> lesson.json
-  -> quality preflight
-  -> premium TTS
-  -> Remotion
-```
-
-## Layout choices
-
-```text
-hero
-split
-spotlight
-cards
-stacked
-editorial
-console
-blueprint
-big-number
-callout
-checklist
-quiz-grid
-quote-focus
-minimal
-```
-
-## Automatic captions
-
-Each scene narration is automatically broken into short caption phrases and displayed
-near the bottom of the frame. This adds essentially no extra compute and does not require Whisper.
-
-## Grounding
-
-Every AI-generated scene includes `source_excerpt`. Richlesson verifies that the excerpt
-exists in the original source file and measures vocabulary overlap between the excerpt and narration.
-
-## Preflight quality gate
-
-The score considers source grounding, scene variety, visual completeness, and verification.
-The default required score is 75.
-
+Man page:
 ```bash
-REQUIRE_SCORE=85 ./richlesson.sh article.md --ai
+man ./man/richlesson.1
 ```
 
-If the score is too low, Richlesson stops before narration and rendering.
-
-## V3 install additions
-
+D2:
 ```bash
-brew install ffmpeg jq
-python -m pip install edge-tts
-python -m pip install google-api-python-client google-auth-oauthlib google-auth-httplib2
-npm install
+d2 docs/diagrams/architecture.d2 docs/architecture.svg
 ```
 
-For AI mode:
-
+## Wiki
+Initialize the GitHub Wiki once in the web UI, then:
 ```bash
-ollama pull gemma3:4b
+./scripts/sync-wiki.sh
 ```
+The wiki clone/push uses SSH: `git@github.com:iamrichmack111/richlesson-remotion-v3.wiki.git`.
 
-## V3 examples
-
-Grounded AI lesson with captions and a quality threshold:
-
-```bash
-./richlesson.sh article.md \
-  --ai \
-  --model gemma3:4b \
-  --theme cinematic-glass \
-  --voice andrew \
-  --resolution 1080p \
-  --require-score 80
-```
-
-Vertical lesson:
-
-```bash
-./richlesson.sh article.txt --ai --resolution shorts
-```
-
-Render and upload privately to YouTube with a Markdown description:
-
-```bash
-./richlesson.sh article.md \
-  --ai \
-  --resolution 1080p \
-  --youtube \
-  --privacy private \
-  --description description.md \
-  --tags "education,technology,richmack"
-```
-
-YouTube OAuth files should remain local and are ignored by Git.
+## Development principles
+1. human-readable source is canonical,
+2. AI is optional,
+3. AI plans/structures rather than silently becoming factual authority,
+4. JSON is the rendering boundary,
+5. publishing is separate and optional,
+6. secrets never enter Git/Docker layers,
+7. architecture documentation changes with architecture.
